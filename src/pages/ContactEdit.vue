@@ -21,79 +21,78 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { contactService } from '../services/contact.service.js'
 
-export default {
-    data() {
-        return {
-            contact: {},
-        }
-    },
-    methods: {
-        async save() {
-            try {
-                await contactService.saveContact(this.contact)
-                this.$router.push('/contact')
-            } catch (err) {
-                console.error(err)
-                throw err
-            }
-        },
-        async onDelete() {
-            try {
-                await contactService.deleteContact(this.contact._id)
-                this.$router.push('/contact')
-            } catch (err) {
-                console.error(err)
-                throw err
-            }
-        },
-        onCancel() {
-            this.contact = contactService.getEmptyContact()
-        },
-    },
-    async created() {
+const router = useRouter()
+const route = useRoute()
+
+    const contact = ref({})
+
+    onMounted(async () => {
+
+
+        // console.log('route:', route.params)
+        const { id } = useRoute().params
+        // console.log('id:', id)
         try {
-            const id = this.$route.params.id
             if (!id) {
-                this.contact = contactService.getEmptyContact()
+                contact.value = contactService.getEmptyContact()
             } else {
-                this.contact = await contactService.getContactById(id)
+                contact.value = await contactService.getContactById(id)
             }
         } catch (err) {
             console.error(err)
             throw err
         }
-    },
-}
+    })
+    const save = async () => {
+        try {
+                await contactService.saveContact(contact.value)
+                router.push('/contact')
+            } catch (err) {
+                console.error(err)
+                throw err
+            }
+    }
+
+    const onDelete = async () => {
+        try {
+                await contactService.deleteContact(contact.value._id)
+                router.push('/contact')
+            } catch (err) {
+                console.error(err)
+                throw err
+            }
+    }
+    const onCancel = () => {
+        this.contact = contactService.getEmptyContact()
+    }
 </script>
 
 <style>
 .contact-edit {
     padding: 20px;
-}
 
-.contact-edit form {
-    align-items: center;
-    gap: 10px;
-}
+    form {
+        align-items: center;
+        gap: 10px;
+    }
+    input {
+        padding: 5px;
+        color: #222;
 
-form input {
-    padding: 5px;
+    }
+    img {
+    width: 165px;
+    margin-block-end: 10px;
+    }
 }
 
 .buttons {
     gap: 20px;
     margin-block-start: 20px;
-}
-
-.contact-edit img {
-    width: 165px;
-    margin-block-end: 10px;
-}
-
-.contact-edit input {
-    color: #222;
 }
 </style>
