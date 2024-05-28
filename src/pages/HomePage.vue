@@ -6,7 +6,13 @@
         <p class="date">Updated to {{ date }}</p>
         <p class="flex"><span class="balance"></span>{{ user.balance }}</p>
         <p class="flex"><span class="bitcoin"></span>{{ rate }}</p>
+        <div class="flex pinia-demo">
+            <button @click="piniaStore.diff(1)">+</button>
+            <span>{{ piniaStore.count }}</span>
+            <button @click="piniaStore.diff(-1)">-</button>
+        </div>
     </section>
+
 </template>
 
 <script setup>
@@ -14,6 +20,11 @@ import { ref, computed, onMounted } from 'vue'
 import { userService } from '../services/user.service.js'
 import { bitcoinService } from '../services/bitcoin.service.js'
 import { useStore } from 'vuex'
+
+import { usePiniaStore } from '../store/PiniaStore.js'
+
+const piniaStore = usePiniaStore()
+// retrun piniaStore
 
 // export default {
     // setup(){
@@ -67,6 +78,22 @@ import { useStore } from 'vuex'
 </script>
 
 <style>
+.pinia-demo{
+    margin: 2em 0;
+    padding: 1.5em;
+    border-radius: 1em;
+    gap: 2em;
+    justify-items: center;
+    align-items: center;
+
+    background-color: rgba(var(--myBg), .2);
+    span{
+        margin: auto;
+        width: 4em;
+        font-size: 1.5em;
+        text-align: center
+    }
+}
 .home-page {
     display: flex;
     justify-content: center;
