@@ -10,32 +10,60 @@
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue'
 import { userService } from '../services/user.service.js'
 import { bitcoinService } from '../services/bitcoin.service.js'
+import { useStore } from 'vuex'
 
 export default {
-    data() {
+
+    setup(){
+        const store = useStore()
+        
+        const rate = ref(null) 
+        const date = computed(() => new Date().toDateString())
+        const user = computed(() => store.getters.user)
+
+        onMounted(async () => {
+            try {
+                rate.value = await bitcoinService.getRate(user.value.balance)
+            } catch (err) {
+                console.error(err)
+                throw err
+            }
+        })
+
         return {
-            rate: null,
+            rate,
+            date,
+            user
         }
-    },
-    async created() {
-        try {
-            this.rate = await bitcoinService.getRate(this.user.balance)
-        } catch (err) {
-            console.error(err)
-            throw err
-        }
-    },
-    computed: {
-        date() {
-            return new Date().toDateString()
-        },
-        user() {
-            return this.$store.getters.user
-        },
-    },
+    }
+
+
 }
+//     data() {
+//         return {
+//             rate: null,
+//         }
+//     },
+//     async created() {
+//         try {
+//             this.rate = await bitcoinService.getRate(this.user.balance)
+//         } catch (err) {
+//             console.error(err)
+//             throw err
+//         }
+//     },
+//     computed: {
+//         date() {
+//             return new Date().toDateString()
+//         },
+//         user() {
+//             return this.$store.getters.user
+//         },
+//     },
+// }
 </script>
 
 <style>
