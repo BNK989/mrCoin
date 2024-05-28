@@ -2,7 +2,7 @@
   <header v-if="user" class="app-header">
     <RouterLink to="/">
       <div class="logo">
-        <p>Mister<span id="bit-txt">Bit</span>coin</p>
+        <p>Mr<span id="bit-txt">coin</span></p>
       </div>
     </RouterLink>
     <section class="user">
