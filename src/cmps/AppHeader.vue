@@ -2,13 +2,15 @@
   <header v-if="user" class="app-header">
     <RouterLink to="/">
       <div class="logo">
-        <p>Mr<span id="bit-txt">coin</span></p>
+        <p>Mr<span id="bit-txt">Coin</span></p>
       </div>
     </RouterLink>
-    <section class="user">
-      <p>{{ user.name }}</p>
+    <section v-if="user.name" class="user">
+      <p class="username">{{ user.name }}</p>
       <span>・</span>
       <p>{{ user.balance }} coins</p>
+      <span>・</span>
+      <p @click="onLogout" class="logout-btn">Logout</p>
     </section>
     <ul class="routes">
       <RouterLink to="/contact"><li>Contacts</li></RouterLink
@@ -21,16 +23,21 @@
 </template>
 
 <script>
-import { userService } from "../services/user.service.js";
 export default {
-  data() {
-    return {
-      user: null,
-    };
-  },
-  created() {
-    this.user = userService.getUser();
-  },
+  computed: {
+      user() {
+        return this.$store.getters.user
+      }
+    },
+    methods: {
+      onLogout() {
+        localStorage.clear()
+        this.$router.push('/signup')
+      }
+    }
+  // created() {
+  //   this.user = userService.getUser();
+  // },
 };
 </script>
 
@@ -42,6 +49,14 @@ export default {
   width: 100%;
   padding-inline: 20px;
   padding-block: 0.7em;
+}
+
+.username {
+  text-transform: capitalize;
+}
+
+.logout-btn {
+  cursor: pointer;
 }
 
 .logo, .routes li, .routes span,
@@ -69,6 +84,7 @@ ul {
 .routes li:hover {
   /* text-decoration: line-through; */
   transform: scale(0.8);
+  transition: 0.4s;
 }
 
 .user {

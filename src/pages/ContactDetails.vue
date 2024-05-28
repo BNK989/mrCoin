@@ -2,7 +2,7 @@
   <section class="contact-details flex column" v-if="selectedContact">
     <RouterLink to="/contact" class="back-btn"><button>Back</button></RouterLink>
     <img
-      :src="`https://robohash.org/${selectedContact.name}?set=set3`"
+      :src="`https://robohash.org/${selectedContact._id}?set=set5`"
       :alt="`${selectedContact.name} picture`"
     />
     <h3>Name:</h3>
@@ -24,9 +24,8 @@ export default {
   },
   async created() {
     try {
-      this.selectedContact = await contactService.getContactById(
-        this.$route.params.id
-      );
+      const { id } = this.$route.params;
+      this.selectedContact = await contactService.getContactById(id);
       console.log;
     } catch (err) {
       console.log(err);
@@ -45,6 +44,7 @@ export default {
 
 .contact-details img {
   width: 205px;
+  margin-block-end: 1em;
 }
 
 .back-btn {

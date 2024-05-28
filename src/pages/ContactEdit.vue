@@ -6,7 +6,7 @@
     <form @submit.prevent="save" class="flex column">
       <img
         v-if="contact._id"
-        :src="`https://robohash.org/${contact.name}?set=set3`"
+        :src="`https://robohash.org/${contact._id}?set=set5`"
         :alt="`${contact.name} picture`"
       />
       <label for="name">Name</label>
@@ -46,7 +46,6 @@ export default {
   data() {
     return {
       contact: {},
-    //   contacts: [],
     };
   },
   methods: {
@@ -62,11 +61,7 @@ export default {
     async onDelete() {
       try {
         await contactService.deleteContact(this.contact._id);
-        // const idx = this.contacts.findIndex(
-        //   (_contact) => _contact._id === this.contact._id
-        // );
         this.$router.push('/contact')
-        // this.contacts.splice(idx, 1);
       } catch (err) {
         console.log(err);
         throw err;
@@ -83,7 +78,6 @@ export default {
         this.contact = contactService.getEmptyContact();
       } else {
         this.contact = await contactService.getContactById(id);
-        // this.contacts = await contactService.getContacts();
       }
     } catch (err) {
       console.log(err);
@@ -113,7 +107,8 @@ form input {
 }
 
 .contact-edit img {
-  width: 205px;
+  width: 165px;
+  margin-block-end: 10px;
 }
 
 .contact-edit input {

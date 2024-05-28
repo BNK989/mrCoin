@@ -1,16 +1,12 @@
 <template>
-    <!-- <ul class="contact-list" @remove="onRemoveContact"> -->
-    <TransitionGroup class="contact-list" name="list" mode="out-in" tag="ul">
+    <!-- <ul v-if="contacts" class="contact-list" @remove="onRemoveContact"> -->
+    <TransitionGroup class="contact-list" name="list" mode="out-in" tag="ul" @remove="onRemoveContact">
         <li v-for="contact in contacts" :key="contact._id">
             <ContactPreview :contact="contact" />
             <div class="user-actions flex">
                 <button @click="onRemoveContact(contact._id)">Delete</button>
-                <RouterLink :to="`/contact/${contact._id}`">
-                    <button>Details</button>
-                </RouterLink>
-                <RouterLink :to="`/contact/edit/${contact._id}`">
-                    <button>Edit</button>
-                </RouterLink>
+                <RouterLink :to="`/contact/${contact._id}`"><button>Details</button></RouterLink>
+                <RouterLink :to="`/contact/edit/${contact._id}`"><button>Edit</button></RouterLink>
             </div>
         </li>
     </TransitionGroup>
@@ -40,12 +36,12 @@ export default {
 <style>
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
-  transform: translateY(-40px);
+    opacity: 0;
+    transform: translateY(-40px);
 }
 .contact-list {
     display: grid;

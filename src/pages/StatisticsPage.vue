@@ -1,16 +1,31 @@
 <template>
-    <section class="statistics" v-if="chartData.labels && chartData.datasets">
-        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
-    </section>
+  <section class="statistics" v-if="chartData.labels && chartData.datasets">
+    <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  </section>
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Bar } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
-import { bitcoinService } from '../services/bitcoin.service.js'
+import { bitcoinService } from "../services/bitcoin.service.js";
 
 export default {
     name: 'BarChart',
@@ -70,6 +85,7 @@ export default {
 
 <style>
 .statistics {
-    margin-block: 60px;
+  margin-block: 60px;
+  margin-inline: 20px;
 }
 </style>

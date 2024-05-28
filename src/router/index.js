@@ -1,11 +1,11 @@
 // import { createRouter, createWebHistory } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
-
 import HomePage from '../pages/HomePage.vue'
 import ContactIndex from '../pages/ContactIndex.vue'
 import ContactDetails from '../pages/ContactDetails.vue'
-import ContactEdit from '../pages/ContactEdit.vue'
 import StatisticsPage from '../pages/StatisticsPage.vue'
+import ContactEdit from '../pages/ContactEdit.vue'
+import LoginSignup from '../pages/LoginSignup.vue'
 
 const routerOptions = {
   // history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,14 +27,19 @@ const routerOptions = {
       component: ContactDetails
     },
     {
+      path: '/stats',
+      name: 'stats',
+      component: StatisticsPage
+    },
+    {
       path: '/contact/edit/:id?',
       name: 'edit',
       component: ContactEdit
     },
     {
-      path: '/stats',
-      name: 'stats',
-      component: StatisticsPage
+      path: '/signup',
+      name: 'signup',
+      component: LoginSignup
     },
   ]
 }
