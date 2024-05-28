@@ -9,15 +9,15 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { userService } from '../services/user.service.js'
 import { bitcoinService } from '../services/bitcoin.service.js'
 import { useStore } from 'vuex'
 
-export default {
+// export default {
+    // setup(){
 
-    setup(){
         const store = useStore()
         
         const rate = ref(null) 
@@ -33,15 +33,15 @@ export default {
             }
         })
 
-        return {
-            rate,
-            date,
-            user
-        }
-    }
+        // return {
+        //     rate,
+        //     date,
+        //     user
+        // }
+    // }
+// }
 
 
-}
 //     data() {
 //         return {
 //             rate: null,

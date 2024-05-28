@@ -11,25 +11,23 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { contactService } from '../services/contact.service.js'
-export default {
-    data() {
-        return {
-            selectedContact: {},
-        }
-    },
-    async created() {
-        try {
-            const { id } = this.$route.params
-            this.selectedContact = await contactService.getContactById(id)
-            console.log
-        } catch (err) {
-            console.error(err)
-            throw err
-        }
-    },
-}
+
+const selectedContact = ref({})
+
+onMounted(async () => {
+    const { id } = useRoute().params
+
+    try {
+        selectedContact.value = await contactService.getContactById(id)
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+})
 </script>
 
 <style>
