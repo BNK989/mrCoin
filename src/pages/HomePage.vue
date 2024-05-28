@@ -1,8 +1,11 @@
 <template>
     <section v-if="user" class="home-page">
         <h1>
-            Hello, <span>{{ user.name }}</span>
+            Hello, <span>{{ user.name || 'Mr. you' }}</span>
         </h1>
+        <img
+                :src="`https://robohash.org/${user.name || 'Mr-you'}?set=set5`"
+                :alt="`user picture`" />
         <p class="date">Updated to {{ date }}</p>
         <p class="flex"><span class="balance"></span>{{ user.balance }}</p>
         <p class="flex"><span class="bitcoin"></span>{{ rate }}</p>
@@ -94,6 +97,7 @@ const piniaStore = usePiniaStore()
         text-align: center
     }
 }
+
 .home-page {
     display: flex;
     justify-content: center;
@@ -102,6 +106,9 @@ const piniaStore = usePiniaStore()
     margin-block: 18%;
     gap: 8px;
     color: #fff;
+    img{
+        max-width: 15dvw;
+    }
 }
 
 h1 {
