@@ -23,10 +23,9 @@ export default {
     methods: {
         async removeContact(id) {
             try {
-              console.log('cmp', id)
                 this.$store.dispatch({ type: 'deleteContact', id })
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 throw err
             }
         },
@@ -34,7 +33,7 @@ export default {
             try {
                 this.$store.dispatch({ type: 'loadContacts', filterBy })
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 throw err
             }
         },
@@ -43,7 +42,7 @@ export default {
         try {
             this.$store.dispatch({ type: 'loadContacts' })
         } catch (err) {
-            console.log(err)
+            console.error(err)
             throw err
         }
     },

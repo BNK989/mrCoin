@@ -15,7 +15,7 @@ async function getRate(amount) {
         utilService.saveToStorage(STORAGE_RATE, rate)
         return rate
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -25,18 +25,20 @@ async function getMarketPriceHistory() {
         const cachedMarketPriceHistory = utilService.loadFromStorage(STORAGE_MARKETPRICE)
         if (cachedMarketPriceHistory) return cachedMarketPriceHistory
 
-        let { data: marketPriceHistory } = await axios.get('https://api.blockchain.info/charts/market-price?timespan=5months&format=json&cors=true')
+        let { data: marketPriceHistory } = await axios.get(
+            'https://api.blockchain.info/charts/market-price?timespan=5months&format=json&cors=true',
+        )
         const vals = marketPriceHistory.values
-        marketPriceHistory = vals.map(val => {
+        marketPriceHistory = vals.map((val) => {
             return {
-                date: new Date(val.x * 1000).toLocaleDateString("en-US"),
-                price: val.y
+                date: new Date(val.x * 1000).toLocaleDateString('en-US'),
+                price: val.y,
             }
         })
         utilService.saveToStorage(STORAGE_MARKETPRICE, marketPriceHistory)
         return marketPriceHistory
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -46,11 +48,13 @@ async function getAvgBlockSize() {
         const cachedAvgBlockSize = utilService.loadFromStorage(STORAGE_AVGBLOCKSIZE)
         if (cachedAvgBlockSize) return cachedAvgBlockSize
 
-        let { data: avgBlockSize } = await axios.get('https://api.blockchain.info/charts/avg-block-size?timespan=5months&format=json&cors=true')
+        let { data: avgBlockSize } = await axios.get(
+            'https://api.blockchain.info/charts/avg-block-size?timespan=5months&format=json&cors=true',
+        )
         utilService.saveToStorage(STORAGE_AVGBLOCKSIZE, avgBlockSize)
         return avgBlockSize
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
